@@ -1,11 +1,10 @@
 import threading
 import random
 
-from server.models.block.block import Block
-#from models.board.board import Board
-#from models.piece.piece import Piece
-
 from pynput import keyboard
+from server.models.block.block import Block
+from server.models.board.board import Board
+from server.models.piece.piece import Piece
 
 my_board = Board(20, 10)
 
@@ -64,11 +63,5 @@ def tick():
     threading.Timer(0.4, tick).start()
 
 # Non blocking keyboard listener
-listener = keyboard.Listener(
-    on_press=on_press)
-listener.start()
-
-tick()
-#capture_actions()
     
 

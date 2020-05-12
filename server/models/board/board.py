@@ -43,7 +43,6 @@ class Board:
                 positions.insert(0, [(x, 0, '.') for x in range(len(positions[0]))])
             # reset positions (previous step messed (x, y) up with the removing and adding)
             for _y, row in enumerate(positions, start = 0):
-                print([(i, pos) for (i, pos) in enumerate(row, start = 0)])
                 for _x, (x, y, shape) in enumerate(row, start = 0):
                     positions[_y][_x] = (_x, _y, shape)
             self.positions = positions

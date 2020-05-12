@@ -1,4 +1,4 @@
-from .block import Block
+from server.models.block.block import Block
 
 class Piece:
     templates = {
@@ -112,32 +112,32 @@ class Piece:
             @param x -- indica la posicion en la fila con la que se va a trackear la pieza (se puede asumir que es el bloque del medio)
             @param y -- indica la posicion en la columna con la que se va a trackear la pieza (se puede asumir que es el bloque del medio)
     """
-    def __init__(self, shape, x = 0, y = 5):
+    def __init__(self, shape, x = 5, y = 0):
         self.shape = shape
-        self.x = y
-        self.y = x
+        self.x = x
+        self.y = y
         self.rotation = 0
         self.template = Piece.templates[shape][abs(self.rotation % len(Piece.templates[self.shape]))]
         self.blocks = self.calculate_blocks()
 
     def rotate_clock(self):
         self.rotation += 1
-        print(abs(self.rotation % len(Piece.templates[self.shape])))
         self.template = Piece.templates[self.shape][abs(self.rotation % len(Piece.templates[self.shape]))]
         self.blocks = self.calculate_blocks()
 
     def rotate_unclock(self):
         self.rotation -= 1
-        print(abs(self.rotation % len(Piece.templates[self.shape])))
         self.template = Piece.templates[self.shape][abs(self.rotation % len(Piece.templates[self.shape]))]
         self.blocks = self.calculate_blocks()
 
     def calculate_blocks(self):
         lista = []
+        
         for y, y_string in enumerate(self.template, start = 0):
             for x, x_char in enumerate(y_string, start = 0):
                 if(x_char != '.'):
                     lista.append(Block(self.x + x - 1, self.y + y - 1))
+        
         self.blocks = lista
         return lista
 
