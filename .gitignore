@@ -1,4 +1,5 @@
 **/__pycache__/
 *.pyc
 .history
+.vscode
 settings.json
