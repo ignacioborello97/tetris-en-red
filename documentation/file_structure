@@ -1,0 +1,371 @@
+[
+    {
+        "name": "documentation",
+        "children": [
+            {"name":"SCM", "value":0},
+            {"name":"PCM", "value":0},
+            {"name":"CM", "value":0},
+            {"name":"CCB", "value":0},
+            {"name":"VM", "value":0},
+            {"name":"SRS", "value":0}
+        ]
+    },
+    {
+        "name": "server",
+        "children": [
+            {
+                "name": "models",
+                "children": [
+                    {
+                        "name": "block",
+                        "children": [
+                            {
+                                "name": "block.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "piece",
+                        "children": [
+                            {
+                                "name": "piece.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "board",
+                        "children": [
+                            {
+                                "name": "board.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "game",
+                        "children": [
+                            {
+                                "name": "game.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "player",
+                        "children": [
+                            {
+                                "name": "player.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "etc...",
+                        "value": 0
+                    }
+                ]
+            },
+            {
+                "name": "views",
+                "children": [
+                    {
+                        "name": "game",
+                        "children": [
+                            {
+                                "name": "game.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "player",
+                        "children": [
+                            {
+                                "name": "player.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "etc...",
+                        "value": 0
+                    }
+                ]
+            },
+            {
+                "name": "controllers",
+                "children": [
+                    {
+                        "name": "game",
+                        "children": [
+                            {
+                                "name": "game.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "player",
+                        "children": [
+                            {
+                                "name": "player.py",
+                                "value": 0
+                            },
+                            {
+                                "name": "test.py",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "etc...",
+                        "value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "client",
+        "children": [
+            {
+                "name": "assets",
+                "children": [
+                    {
+                        "name": "img",
+                        "children": [
+                            {
+                                "name": "avatar_1.png",
+                                "value": 0
+                            },
+                            {
+                                "name": "piece_L.png",
+                                "value": 0
+                            },
+                            {
+                                "name": "etc...",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+                        "name": "sound",
+                        "children": [
+                            {
+                                "name": "music_1.mp3",
+                                "value": 0
+                            },
+                            {
+                                "name": "beep.mp3",
+                                "value": 0
+                            },
+                            {
+                                "name": "etc...",
+                                "value": 0
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "components",
+                "children":[
+                    {
+                        "name":"entities",
+                        "children":[
+                            {
+                                "name": "block",
+                                "children": [
+                                    {
+                                        "name": "block.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "piece",
+                                "children": [
+                                    {
+                                        "name": "piece.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "board",
+                                "children": [
+                                    {
+                                        "name": "board.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "button",
+                                "children": [
+                                    {
+                                        "name": "button.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "etc...",
+                                "value": 0
+                            }
+
+                        ]
+                    },
+                    {
+                        "name":"views",
+                        "children":[
+                            {
+                                "name": "login",
+                                "children": [
+                                    {
+                                        "name": "login.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "lobby",
+                                "children": [
+                                    {
+                                        "name": "lobby.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "main_menu",
+                                "children": [
+                                    {
+                                        "name": "main_menu.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "game",
+                                "children": [
+                                    {
+                                        "name": "game.py",
+                                        "value": 0
+                                    },
+                                    {
+                                        "name": "test.py",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "etc...",
+                                "value": 0
+                            }
+
+                        ]
+                    }
+                ]
+            },
+            {
+                "name":"lib",
+                "children":[
+                    {
+                        "name":"http",
+                        "children":[
+                            {
+                                "name":"etc",
+                                "value":0
+                            }
+                        ]
+
+                    },
+                    {
+                        "name":"socket",
+                        "children":[
+                            {
+                                "name":"etc",
+                                "value":0
+                            }
+                        ]
+
+                    },
+                    {
+                        "name":"input_register",
+                        "children":[
+                            {
+                                "name":"etc",
+                                "value":0
+                            }
+                        ]
+
+                    }
+                ]
+            }
+
+        ]
+    }
+]
