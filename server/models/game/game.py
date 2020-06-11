@@ -44,6 +44,12 @@ class Game():
     def remove_player(self, player):
         self.players.remove(player)
 
+    def get_player(self, player_id):
+        for player in self.players:
+            if(player.id == player_id):
+                return player
+        return None
+
     def json(self):
         return {
             "id": self.id,

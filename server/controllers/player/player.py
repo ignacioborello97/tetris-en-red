@@ -26,3 +26,34 @@ class PlayerController:
         
     def list_players(self):
         return [player.json() for player in PlayerController.player_list]
+
+    def ready_player(self, player_id):
+        player = self.get_player(player_id)
+        if player is not None:
+            player.set_state(Player.READY)
+            return True
+        else:
+            return False
+
+    def playing_player(self, player_id):
+        player = self.get_player(player_id)
+        if player is not None:
+            player.set_state(Player.PLAYING)
+            return True
+        else:
+            return False
+    
+    def iddle_player(self, player_id):
+        player = self.get_player(player_id)
+        if player is not None:
+            player.set_state(Player.IDDLE)
+            return True
+        else:
+            return False
+
+    def is_ready_player(self, player_id):
+        player = self.get_player(player_id)
+        if player is not None:
+            return player.state == Player.READY
+        else:
+            return False

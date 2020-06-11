@@ -35,7 +35,7 @@ class Board:
                     accumulator = False
             if accumulator == True:
                 completed_rows.append(index)
-        
+
         # take completed rows away and add new ones
         if len(completed_rows) > 0:
             for i in completed_rows:

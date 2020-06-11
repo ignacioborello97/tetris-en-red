@@ -10,3 +10,4 @@ listener = keyboard.Listener(
 listener.start()
 
 tick()
+# import server.lib.test

@@ -25,6 +25,10 @@ class Player:
         self.tetris = 0
         self.board = Board(20, 10)
 
+    def set_state(self, state):
+        if(state in [Player.IDDLE, Player.PENDING, Player.READY, Player.PLAYING, Player.SPECTATING]):
+            self.state = state
+
     def action_move_left(self):
         self.board.active_piece.x -= 1
         self.apply_action({"x": 1})
@@ -51,9 +55,9 @@ class Player:
             if "x" in correction:
                 self.board.active_piece.x += correction["x"]
             if "y" in correction:
-                self.board.active_piece.x += correction["y"]
+                self.board.active_piece.y += correction["y"]
             if "rotation" in correction:
-                self.board.active_piece.x += correction["rotation"]
+                self.board.active_piece.rotation += correction["rotation"]
 
     def json(self):
         return {
