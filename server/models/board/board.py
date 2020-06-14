@@ -53,10 +53,14 @@ class Board:
             self.positions = positions
             self.active_piece = None
 
-    def __str__(self):
+    def get_board_state(self):
         positions = copy.deepcopy(self.positions)
         for block in self.active_piece.calculate_blocks():
             positions[block.y][block.x] = (block.x, block.y, self.active_piece.shape)
+        return positions
+
+    def __str__(self):
+        positions = self.get_board_state()
 
         output = '\n\n\n\n\n\n\n\n\n\n'
         for row in positions:

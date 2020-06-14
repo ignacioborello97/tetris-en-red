@@ -1,8 +1,11 @@
 from functools import partial
 from flask import request, jsonify, make_response
+from .game_subject import GameSubject
 from .. import error_404, error_500, error_400
 from ...index import app, socketio
 from ...controllers.game.game import GameController
+
+game_subjects = []
 
 # Lista los juegos existentes en ejecucion
 @app.route('/game', methods=['GET'])
@@ -16,7 +19,8 @@ def list_games():
 
 def game_ping(game_id, data):
     print(' : '+data)
-    socketio.emit('ping_response', 'te respondo wey', namespace='/game/'+game_id)
+    socketio.emit('ping_response', 'te respondo wey',
+                  namespace='/game/'+game_id)
 
 
 # Crea un nuevo juego y lo devuelve como JSON
@@ -26,7 +30,8 @@ def create_game():
     try:
         data = request.json
         game = gameController.create_game()
-        socketio.on_event('ping', partial(game_ping, game.id), namespace='/game/'+game.id)
+        game_subject = GameSubject(game.id)
+        game_subjects.append(game_subject)
         return jsonify(game.json())
     except Exception as error:
         return error_400(error.args[0])
@@ -57,12 +62,12 @@ def get_game_players(id):
     except:
         return error_500(None)
 
-#Agrega el jugador con el id pasado por body en el juego del id correspondiente y lo retorna como JSON o 404 si no existe
+# Agrega el jugador con el id pasado por body en el juego del id correspondiente y lo retorna como JSON o 404 si no existe
 @app.route('/game/<id>/players', methods=['POST'])
 def add_game_player(id):
     gameController = GameController()
     try:
-        print('id : ',id)
+        print('id : ', id)
         data = request.json
         player = gameController.add_player(id, data["id"])
         if player is not None:
@@ -111,12 +116,12 @@ def game_ready(game_id, player_id):
     if(game is not None):
         player = game.get_player(player_id)
         if(player is not None):
-            #poner jugador en ready
+            # poner jugador en ready
             gameController.ready_player(game_id, player_id)
             if gameController.get_game_ready(game_id) == True:
                 if gameController.start_game(game_id) == True:
-                    socketio.emit('start', {"game_id":game_id})
-                    
+                    socketio.emit('start', {"game_id": game_id})
+
             return gameController.start_game(game_id)
         else:
             return False

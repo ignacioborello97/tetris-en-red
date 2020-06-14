@@ -29,6 +29,12 @@ class Player:
         if(state in [Player.IDDLE, Player.PENDING, Player.READY, Player.PLAYING, Player.SPECTATING]):
             self.state = state
 
+    def drop_piece(self, piece):
+        self.board.add_piece(piece)
+
+    def has_piece(self):
+        return self.board.active_piece is not None
+
     def action_move_left(self):
         self.board.active_piece.x -= 1
         self.apply_action({"x": 1})
@@ -38,16 +44,18 @@ class Player:
         self.apply_action({"x": -1})
     
     def action_rotate_clock(self):
-        self.board.active_piece.x += 1
+        # self.board.active_piece.rotation += 1
+        self.board.active_piece.rotate_clock()
         self.apply_action({"rotation": -1})
     
     def action_rotate_unclock(self):
-        self.board.active_piece.x -= 1
-        self.apply_action({"rotation": +1})
+        # self.board.active_piece.rotation -= 1
+        self.board.active_piece.rotate_unclock()
+        self.apply_action({"rotation": 1})
     
     def action_accelerate(self):
-        self.board.active_piece.x += 1
-        self.apply_action({"y": 1})
+        self.board.active_piece.y += 1
+        self.apply_action({"y": -1})
 
     def apply_action(self, correction):
         self.board.active_piece.calculate_blocks()
@@ -57,8 +65,11 @@ class Player:
             if "y" in correction:
                 self.board.active_piece.y += correction["y"]
             if "rotation" in correction:
-                self.board.active_piece.rotation += correction["rotation"]
-
+                if(correction["rotation"] > 0):
+                    self.board.active_piece.rotate_clock()
+                else:
+                    self.board.active_piece.rotate_unclock()
+                    
     def json(self):
         return {
             "id": self.id,

@@ -1,4 +1,4 @@
-from server.models.block.block import Block
+from ..block.block import Block
 
 class Piece:
     templates = {
