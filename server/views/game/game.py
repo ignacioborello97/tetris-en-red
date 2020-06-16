@@ -67,7 +67,6 @@ def get_game_players(id):
 def add_game_player(id):
     gameController = GameController()
     try:
-        print('id : ', id)
         data = request.json
         player = gameController.add_player(id, data["id"])
         if player is not None:
@@ -77,53 +76,3 @@ def add_game_player(id):
     except Exception as e:
         print(e.args)
         return error_500(e.args)
-
-# Recibe el inicio de conexion de un usuario a un juego
-@socketio.on('connect', namespace='/game')
-def game_connect(game_id, player_id):
-    gameController = GameController()
-    game = gameController.get_game(game_id)
-    if(game is not None):
-        player = game.get_player(player_id)
-        if(player is not None):
-            return True
-        else:
-            return False
-    else:
-        return False
-
-# Recibe la desconexion de un usuario a un juego
-@socketio.on('disconnect', namespace='/game')
-def game_disconnect(game_id, player_id):
-    gameController = GameController()
-    game = gameController.get_game(game_id)
-    if(game is not None):
-        player = game.get_player(player_id)
-        if(player is not None):
-            game.remove_player(player)
-            return True
-        else:
-            return False
-    else:
-        return False
-
-# Define cuando un jugador esta listo para comenzar el juego
-# En caso de que todos los jugadores esten listos, emite la accion 'start' para el juego
-@socketio.on('ready', namespace='/game')
-def game_ready(game_id, player_id):
-    gameController = GameController()
-    game = gameController.get_game(game_id)
-    if(game is not None):
-        player = game.get_player(player_id)
-        if(player is not None):
-            # poner jugador en ready
-            gameController.ready_player(game_id, player_id)
-            if gameController.get_game_ready(game_id) == True:
-                if gameController.start_game(game_id) == True:
-                    socketio.emit('start', {"game_id": game_id})
-
-            return gameController.start_game(game_id)
-        else:
-            return False
-    else:
-        return False
