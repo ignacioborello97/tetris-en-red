@@ -5,6 +5,7 @@ from pynput import keyboard
 sio = socketio.Client()
 # sio.connect('http://localhost:5000')
 
+
 class GameNamespace(socketio.ClientNamespace):
     def add_observer(self, observer):
         try:
@@ -14,7 +15,7 @@ class GameNamespace(socketio.ClientNamespace):
 
     def set_player(self, player):
         self.player = player
-    
+
     def on_connect(self):
         print('connected to namespace '+self.namespace)
         pass
@@ -32,27 +33,27 @@ class GameNamespace(socketio.ClientNamespace):
             self.next("board_state", data)
 
     def press_key(self, key):
-        sio.emit('key_press', {"key":key, "player_id":self.player}, self.namespace)     
+        sio.emit('key_press', {"key": key,
+                               "player_id": self.player}, self.namespace)
 
     def ready(self):
-        sio.emit('ready', {"player_id":self.player}, self.namespace)
+        sio.emit('ready', {"player_id": self.player}, self.namespace)
 
     def next(self, channel, data):
         for observer in self.observers:
             if(channel == "game_state"):
                 observer.update_game_state(data)
-            
+
             if(channel == "board_state"):
                 observer.update_board_state(data)
 
     def update_piece_fall(self):
-        sio.emit('piece_fall', {"player_id":self.player}, self.namespace)
-
+        sio.emit('piece_fall', {"player_id": self.player}, self.namespace)
 
 
 class GameObserver:
     def __init__(self):
-        #aca adentro creo que meteria el game
+        # aca adentro creo que meteria el game
         self.subjects = []
 
     def observe(self, subject):
@@ -74,11 +75,11 @@ class GameObserver:
                 output += shape
             output += '\n'
         output += '\n\n'
-        
+
         print(output)
 
     def make_piece_fall(self):
-        level_time_lambda = 0 #esto seria la variable que cambia en base al nivel
+        level_time_lambda = 0  # esto seria la variable que cambia en base al nivel
         for subject_observer in self.subjects:
             subject_observer.update_piece_fall()
         threading.Timer(1.5 - level_time_lambda, self.make_piece_fall).start()
@@ -98,8 +99,9 @@ sio.register_namespace(game_channel)
 game_observer = GameObserver()
 game_observer.observe(game_channel)
 
+
 def on_press(key):
-    
+
     key_send = ''
     try:
         if(key.char == 'z'):
@@ -119,9 +121,10 @@ def on_press(key):
 
     if (key_send == 'enter'):
         game_channel.ready()
-        #change behavior
+        # change behavior
     else:
         game_channel.press_key(key_send)
+
 
 listener = keyboard.Listener(
     on_press=on_press)
