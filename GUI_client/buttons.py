@@ -11,7 +11,7 @@ def draw_text(text, font, color, surface, x, y):
 class Button:
 
     def __init__(self,msg,x,y,w,h,ic,ac,bs,action=None):
-        self.font = pygame.font.SysFont('comicsansms', int(w/10))
+        self.font = pygame.font.SysFont('comicsansms', int(w/8))
         self.rect = pygame.Rect(x,y,w,h)
         self.x = x
         self.y = y

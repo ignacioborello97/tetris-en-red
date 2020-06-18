@@ -6,7 +6,7 @@ from input_boxes import InputBox
 from texts import Text
 
 class Screen:
-    def __init__(self,width,height,bg,title='',list_b=[],list_i=[],list_t=[]):
+    def __init__(self,width,height,bg,title='',list_b=[],list_i=[],list_t=[],list_p=[],list_a=[]):
         pygame.init()
         self.width = width
         self.height = height
@@ -15,6 +15,8 @@ class Screen:
         self.list_b = list_b
         self.list_i = list_i
         self.list_t = list_t
+        self.list_p = list_p
+        self.list_a = list_a
         self.screen = pygame.display.set_mode((self.width,self.height))
         pygame.display.set_caption(title)
         self.screen.fill(self.bg)
@@ -34,6 +36,12 @@ class Screen:
             for t in self.list_t:
                 t.draw(self.screen)
 
+            for p in self.list_p:
+                p.draw(self.screen)
+
+            for a in self.list_a:
+                a.draw(self.screen)
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -50,21 +58,21 @@ class Screen:
 
 
 
-def asa():
-    print('asa')
+# def asa():
+#     print('asa')
 
 
-pygame.init()
+# pygame.init()
 
-button = Button('Log In', 100, 200, 100, 50,red,bright_red,2,asa)
-a = InputBox(200,400,50,50)
+# button = Button('Log In', 100, 200, 100, 50,red,bright_red,2,asa)
+# a = InputBox(200,400,50,50)
 
-t = Text('ss',94,blue,50,10)
-l = [button]
-d=[t]
-ab = [a]
+# t = Text('ss',94,blue,50,10)
+# l = [button]
+# d=[t]
+# ab = [a]
 
 
-s = Screen(500,500,silver,'s',l,ab,d)
-s.run()
+# s = Screen(500,500,silver,'s',l,ab,d)
+# s.run()
         
