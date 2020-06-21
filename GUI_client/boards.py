@@ -8,11 +8,11 @@ class Board:
         self.block_size = block_size
         self.grid = [[black for _ in range(10)] for _ in range(20)]
 
-
     def draw(self,surface):
+        pygame.draw.rect(surface,bright_yellow,(self.x,self.y,self.block_size*10,self.block_size*20),int(min(self.block_size/2,6)))
         for i in range(len(self.grid)):
             for j in range(len(self.grid[i])):
-                pygame.draw.rect(surface,grid[i][j],(x+j*block_size,y+i*block_size,block_size,block_size),0)
+                pygame.draw.rect(surface,self.grid[i][j],(self.x+j*self.block_size,self.y+i*self.block_size,self.block_size,self.block_size),0)
     
     def update(self,matriz_server):
         for i in range(len(matriz_server)):
