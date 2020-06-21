@@ -1,9 +1,7 @@
 class Subject:
-    def subscribe(self, observer):
-        pass
 
-    def unsubscribe(self, observer):
-        pass
+    def __init__(self):
+        self.observers = []
 
-    def next(self, value):
+    def emit(self, channel, value):
         pass

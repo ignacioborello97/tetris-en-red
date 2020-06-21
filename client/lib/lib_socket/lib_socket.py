@@ -2,8 +2,8 @@ import socketio
 import threading
 from pynput import keyboard
 
+# DEFINICION DEL SOCKET
 sio = socketio.Client()
-# sio.connect('http://localhost:5000')
 
 
 class GameNamespace(socketio.ClientNamespace):
@@ -55,6 +55,8 @@ class GameObserver:
     def __init__(self):
         # aca adentro creo que meteria el game
         self.subjects = []
+        self.player_boards = {}
+        self.player_states = {}
 
     def observe(self, subject):
         subject.add_observer(self)
@@ -66,16 +68,30 @@ class GameObserver:
         # ver que hacer con los otros estados
 
     def update_board_state(self, data):
+        player_id = data["player_id"]
         positions = data["board_state"]
+        player_state = data["player_state"]
 
-        output = '\n\n'
-        for row in positions:
-            output += '                                  '
-            for x, y, shape in row:
-                output += shape
+        self.player_boards[player_id] = positions
+        self.player_states[player_id] = player_state
+
+        for player in self.player_states.keys():
+            header = '      ' + self.player_states[player]['name']
+            for llenar in range(10 - len(self.player_states[player]['name'])):
+                header += ' '
+
+        header += '\n'
+
+        output = ''
+        for rowi, row in enumerate(positions):
+            for player in self.player_boards.keys():
+                output += '      '
+                for x, y, shape in self.player_boards[player][rowi]:
+                    output += shape
             output += '\n'
         output += '\n\n'
 
+        print(header)
         print(output)
 
     def make_piece_fall(self):
@@ -86,46 +102,98 @@ class GameObserver:
 
 
 id = input('Enter your game id: ')
-player = input('Enter your name: ')
+player_1 = input('Enter id player 1: ')
+player_2 = input('Enter id player 2: ')
 
-print(id)
-
+# CONECTAR EL SOCKET AL SERVER Y QUE TOME EL CANAL DEL JUEGO ('/game/'+id)
 sio.connect('http://localhost:5000', namespaces=['/game/'+id])
-# sio.namespaces.append('/game/'+id)
-game_channel = GameNamespace('/game/'+id)
-game_channel.set_player(player)
-sio.register_namespace(game_channel)
 
+# DEFINIS EL GAME SUBJECT
+game_channel_cliente_1 = GameNamespace('/game/'+id)
+game_channel_cliente_2 = GameNamespace('/game/'+id)
+# ASIGNAS EL JUGADOR AL OBJETO
+game_channel_cliente_1.set_player(player_1)
+game_channel_cliente_2.set_player(player_2)
+# ENCHUFAR EL SUBJECT AL socketio
+sio.register_namespace(game_channel_cliente_1)
+sio.register_namespace(game_channel_cliente_2)
+
+# CREAS UN OBSERVER DEL JUEGO
 game_observer = GameObserver()
-game_observer.observe(game_channel)
+# PONES AL OBSERVER A MIRAR LOS EVENTOS
+game_observer.observe(game_channel_cliente_1)
+game_observer.observe(game_channel_cliente_2)
 
 
 def on_press(key):
+
+    key_player_1 = False
+    key_player_2 = False
 
     key_send = ''
     try:
         if(key.char == 'z'):
             key_send = 'z'
+            key_player_1 = True
         if(key.char == 'x'):
             key_send = 'x'
+            key_player_1 = True
+
+        # player 2
+        if(key.char == 'a'):
+            key_send = 'left'
+            key_player_2 = True
+        if(key.char == 'd'):
+            key_send = 'right'
+            key_player_2 = True
+        if(key.char == 's'):
+            key_send = 'down'
+            key_player_2 = True
+        if(key.char == 'j'):
+            key_send = 'z'
+            key_player_2 = True
+        if(key.char == 'k'):
+            key_send = 'x'
+            key_player_2 = True
 
     except AttributeError:
         if(key == keyboard.Key.right):
             key_send = 'right'
+            key_player_1 = True
         if(key == keyboard.Key.left):
             key_send = 'left'
+            key_player_1 = True
         if(key == keyboard.Key.down):
             key_send = 'down'
+            key_player_1 = True
         if(key == keyboard.Key.enter):
             key_send = 'enter'
+            key_player_1 = True
+        # player 2
+        if(key == keyboard.Key.space):
+            key_player_2 = True
+            key_send = 'enter'
 
-    if (key_send == 'enter'):
-        game_channel.ready()
-        # change behavior
-    else:
-        game_channel.press_key(key_send)
+    if(key_player_1):
+        if (key_send == 'enter'):
+            game_channel_cliente_1.ready()
+            # change behavior
+        else:
+            game_channel_cliente_1.press_key(key_send)
+
+    if(key_player_2):
+        if (key_send == 'enter'):
+            game_channel_cliente_2.ready()
+            # change behavior
+            pass
+        else:
+            pass
+            game_channel_cliente_2.press_key(key_send)
 
 
 listener = keyboard.Listener(
     on_press=on_press)
 listener.start()
+
+
+# PROBAR COMO FUNCA ESTO!!!!!!!!!!!!!!!!
