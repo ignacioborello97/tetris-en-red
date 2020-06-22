@@ -45,9 +45,9 @@ class joingameViewBuilder(ViewBuilder):
             
             pygame.display.update()
     
-    def create(self,backAction=None,joinAction=None):
+    def create(self,backAction=None,joinAction=None, lookGame=None):
         backButton = Button('<------',self.width/15,self.height/1.2,self.width/4,self.height/7.5,white,(200,200,200),3,backAction)
-        joinButton = Button('Join Game',self.width/3,self.height/2,self.width/3,self.height/6,red,bright_red,4,joinAction)
+        joinButton = Button('Join Game',self.width/3,self.height/2,self.width/3,self.height/6,red,bright_red,4,joinAction, lookGame)
         self.buttons = [backButton,joinButton]
 
         t1 = Text('Ingresa el codigo',int(self.width/20),black,self.width/2,self.height/12)
@@ -58,3 +58,7 @@ class joingameViewBuilder(ViewBuilder):
 
     def destroy(self):
         self.corriendo = False
+
+    def get_lookGame(self):
+        #print(self.inputs[0].get_username())
+        return self.inputs[0].get_username()

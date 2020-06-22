@@ -1,11 +1,11 @@
 import pygame
 from colores import *
-from screens import Screen
-from texts import Text
-from buttons import Button
-from input_boxes import InputBox
-from boards import Board
-from avatars import Avatar
+# #from screens import Screen
+# from texts import Text
+# from buttons import Button
+# from input_boxes import InputBox
+# from boards import Board
+# from avatars import Avatar
 from loginview import loginViewBuilder
 from main_menuview import mainmenuViewBuilder
 from instructionview import instructionViewBuilder
@@ -14,17 +14,20 @@ from lobbyview import lobbyViewBuilder
 from playview import playViewBuilder
 from aboutview import aboutViewBuilder
 from configview import configViewBuilder
+from client_login import Client
 
 pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load('original-tetris-theme-tetris-soundtrack (1).ogg')
+cliente = Client()
 
 def TetrisEnRed():
     def login():
         s.run()
+        
 
     def menu():
-        m.create(s.getName(),lobby,join,instruction,config,about)
+        m.create(s.getName(), lobby, join, instruction, config, about, createGame)
         m.run()
         
     def instruction():
@@ -36,7 +39,7 @@ def TetrisEnRed():
         a.run()
 
     def join():
-        j.create(menu)
+        j.create(menu, lobby, lookGame)
         j.run()
 
     def lobby():
@@ -56,9 +59,19 @@ def TetrisEnRed():
 
     def musicOff():
         pygame.mixer.music.stop()
+
+    def createPlayer():
+        cliente.create_player(s.getName(), s.getAvatar())
+
+    def createGame():
+        cliente.create_game()
+        cliente.add_player(cliente.get_idgame(), cliente.get_idplayer())
+    
+    def lookGame():
+        cliente.add_player(j.get_lookGame(), cliente.get_idplayer())
     
     s = loginViewBuilder(800,600,silver,'Log In - Tetris en Red')
-    s.create(menu)
+    s.create(menu, createPlayer)
     m = mainmenuViewBuilder(800,700,silver,'Menu principal - Tetris en Red')
     
     i = instructionViewBuilder(400,300,silver,'Instrucciones - Tetris en Red')

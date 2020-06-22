@@ -50,4 +50,4 @@ class InputBox:
         pygame.draw.rect(screen, self.color, self.rect, 2)
     
     def get_username(self):
-        return self.user_name
+        return self.text

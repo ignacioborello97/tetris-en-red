@@ -34,9 +34,9 @@ class mainmenuViewBuilder(ViewBuilder):
             
             pygame.display.update()
 
-    def create(self,name='Nombre',createAction=None,searchAction=None,instrAction=None,configAction=None,aboutAction=None):
+    def create(self,name='Nombre',createAction=None,searchAction=None,instrAction=None,configAction=None,aboutAction=None, newGame=None):
         self.name = name
-        create_game = Button('Crear partida',self.width/4,self.height*(31/70),self.width/2,self.height/8.75,bright_red,red,6,createAction)
+        create_game = Button('Crear partida',self.width/4,self.height*(31/70),self.width/2,self.height/8.75,bright_red,red,6,createAction, newGame)
         search_game = Button('Buscar partida',self.width/4,self.height*(4/7),self.width/2,self.height/8.75,bright_green,green,6,searchAction)
         instructions = Button('Instrucciones',self.width/4,self.height*(7/10),self.width/2,self.height/8.75,bright_blue,blue,6,instrAction)
         configuration = Button('Configuracion',self.width/8,self.height*(31/35),self.width/4,self.height*(3/35),bright_yellow,yellow,6,configAction)

@@ -10,7 +10,7 @@ def draw_text(text, font, color, surface, x, y):
 
 class Button:
 
-    def __init__(self,msg,x,y,w,h,ic,ac,bs,action=None):
+    def __init__(self,msg,x,y,w,h,ic,ac,bs,action=None, action2=None):
         self.font = pygame.font.SysFont('comicsansms', int(w/8))
         self.rect = pygame.Rect(x,y,w,h)
         self.x = x
@@ -23,7 +23,8 @@ class Button:
         self.color = ic
         self.bs = bs
         self.action = action
-        
+        self.action2 = action2
+
     def draw(self,surface):    
         self.mx, self.my = pygame.mouse.get_pos()
         
@@ -40,5 +41,9 @@ class Button:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
-                if self.action!= None:
+                if self.action != None:
+                    if self.action2 != None:
+                        self.action2()
                     self.action()
+                    
+                

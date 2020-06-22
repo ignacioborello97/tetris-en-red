@@ -28,11 +28,11 @@ class Avatar:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
-                self.click = True
-        if event.type == pygame.KEYDOWN:
-            if self.click:
-                if event.key == pygame.K_RETURN:
-                    self.getChosen = True
+        #         self.click = True
+        # if event.type == pygame.KEYDOWN:
+        #     if self.click:
+        #         if event.key == pygame.K_RETURN:
+                self.getChosen = True
 
     def getAvatar(self):
         return self.img
