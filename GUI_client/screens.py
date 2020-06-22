@@ -52,27 +52,8 @@ class Screen:
                 
                 for b in self.list_b:
                     b.handle_event(event)
+
+                for a in self.list_a:
+                    a.handle_event(event)
             
             pygame.display.update()
-
-
-
-
-# def asa():
-#     print('asa')
-
-
-# pygame.init()
-
-# button = Button('Log In', 100, 200, 100, 50,red,bright_red,2,asa)
-# a = InputBox(200,400,50,50)
-
-# t = Text('ss',94,blue,50,10)
-# l = [button]
-# d=[t]
-# ab = [a]
-
-
-# s = Screen(500,500,silver,'s',l,ab,d)
-# s.run()
-        
