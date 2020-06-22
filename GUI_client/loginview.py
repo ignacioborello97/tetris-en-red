@@ -9,12 +9,12 @@ class loginViewBuilder(ViewBuilder):
         self.height = height
         self.bg = bg
         self.screen = pygame.display.set_mode((self.width,self.height))
-        pygame.display.set_caption(title)
+        pygame.display.set_caption(self.title)
         self.screen.fill(self.bg)   
-        self.buttons = buttons 
-        self.texts = texts
-        self.avatares = avatares
-        self.inputs = inputs
+        self.buttons = [] 
+        self.texts = []
+        self.avatares = []
+        self.inputs = []
 
     def run(self):
         while True:
@@ -49,3 +49,20 @@ class loginViewBuilder(ViewBuilder):
                     i.handle_event(event)
             
             pygame.display.update()
+    
+    def create(self):
+        nameInput = InputBox(300, 100, 200, 50)
+        self.inputs = [nameInput]
+
+        loginButton = Button('Log In', 300, 500, 200, 80, red, bright_red, 3)
+        self.buttons = [loginButton]
+
+        t = Text('Escribe tu nombre:', 30, black, 400, 50)
+        t2 = Text('Escoge tu avatar:', 30, black, 400, 220)
+        self.texts = [t, t2]
+
+        avatar1 = Avatar(80, 300, 100, 100, 'dragon100x100.png')
+        avatar2 = Avatar(260, 300, 100, 100, 'perezoso100x100.png')
+        avatar3 = Avatar(440, 300, 100, 100, 'unicornio100x100.png')
+        avatar4 = Avatar(600, 300, 100, 100, 't-rex100x100.png')
+        self.avatares = [avatar1, avatar2, avatar3, avatar4]
