@@ -1,3 +1,4 @@
+from datetime import datetime
 import socketio
 import threading
 from pynput import keyboard
@@ -71,13 +72,12 @@ class GameObserver:
             if self.start_action != None:
                 print('ARRANCA EL JUEGO')
                 self.start_action()
-            threading.Timer(1.5, self.make_piece_fall).start()
+            threading.Timer(0.5, self.make_piece_fall).start()
         # ver que hacer con los otros estados
 
     def update_board_state(self, data):
-        player_id = data["player_id"]
-        positions = data["board_state"]
-        player_state = data["player_state"]
+        self.update_board_action(data)
+
         # self.update_client_board(positions)
 
         # self.player_boards[player_id] = positions
@@ -102,7 +102,6 @@ class GameObserver:
         # print(header)
         # print(output)
     # def update_client_board(self, positions):
-        
 
     def make_piece_fall(self):
         level_time_lambda = 0  # esto seria la variable que cambia en base al nivel
@@ -112,6 +111,9 @@ class GameObserver:
 
     def set_start_action(self, action):
         self.start_action = action
+
+    def set_update_board_action(self, action):
+        self.update_board_action = action
 
 
 # id = input('Enter your game id: ')

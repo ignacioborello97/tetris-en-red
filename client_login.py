@@ -6,6 +6,7 @@ class Client():
 
     id_player: str = ''
     id_game: str = ''
+    player_name: str = ''
 
     gamenamespace: GameNamespace
     gameobserver: GameObserver
@@ -18,12 +19,11 @@ class Client():
             "name": name,
             "avatar": avatar
         }
-
         response = requests.post('http://localhost:5000/player', json=message)
         player = response.json()
-        print(response.json())
         Client.id_player = player['id']
-        print("id jugador  ", Client.id_player)
+        Client.player_name = name
+
 
     def create_game(self):
         response = requests.post('http://localhost:5000/game')
@@ -65,3 +65,6 @@ class Client():
 
     def get_gameobserver(self) -> GameObserver:
         return Client.gameobserver
+
+    def get_player_name(self):
+        return Client.player_name

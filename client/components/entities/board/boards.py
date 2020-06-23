@@ -1,20 +1,27 @@
 import pygame
 from client.components.entities.colors.colores import *
 
+
 class Board:
-    def __init__(self,x,y,block_size):
+    def __init__(self, x, y, block_size):
         self.x = x
         self.y = y
         self.block_size = block_size
         self.grid = [[black for _ in range(10)] for _ in range(20)]
 
-    def draw(self,surface):
-        pygame.draw.rect(surface,bright_yellow,(self.x,self.y,self.block_size*10,self.block_size*20),int(min(self.block_size/2,6)))
+    def draw(self, surface):
+        pygame.draw.rect(surface, bright_yellow, (self.x, self.y, self.block_size *
+                                                  10, self.block_size*20), int(min(self.block_size/2, 6)))
         for i in range(len(self.grid)):
             for j in range(len(self.grid[i])):
-                pygame.draw.rect(surface,self.grid[i][j],(self.x+j*self.block_size,self.y+i*self.block_size,self.block_size,self.block_size),0)
-    
-    def update(self,matriz_server):
+
+                pygame.draw.rect(surface, silver if self.grid[i][j] != black else black, (
+                    self.x + j * self.block_size, self.y + i * self.block_size, self.block_size, self.block_size), 1 if self.grid[i][j] != black else 0)
+                if self.grid[i][j] != black:
+                    pygame.draw.rect(surface, self.grid[i][j], (
+                        self.x + j * self.block_size + 1, self.y + i * self.block_size + 1, self.block_size - 2, self.block_size - 2), 0)
+
+    def update(self, matriz_server):
         for i in range(len(matriz_server)):
             for j in range(len(matriz_server[i])):
                 for k in range(len(matriz_server[i][j])):
@@ -32,3 +39,5 @@ class Board:
                         self.grid[i][j] = yellow
                     if matriz_server[i][j][k] == 'I':
                         self.grid[i][j] = purple
+                    if matriz_server[i][j][k] == 'L':
+                        self.grid[i][j] = blue

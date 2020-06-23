@@ -13,7 +13,6 @@ from ....lib.lib_socket.lib_socket import GameNamespace, GameObserver
 
 client = Client()
 
-
 class lobbyViewBuilder(ViewBuilder):
     def __init__(self, width, height, bg, title=''):
         ViewBuilder.__init__(self, width, height, bg, title)

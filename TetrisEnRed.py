@@ -24,9 +24,12 @@ cliente = Client()
 
 def TetrisEnRed():
     def login():
+        # pasarle la funcion config()
+        # esta vista llama a config(volver='login')
         s.run()
 
     def menu():
+        # esta vista llama a config(volver='menu')
         m.create(s.getName(), lobby, join, instruction,
                  config, about, createGame)
         m.run()
@@ -53,7 +56,8 @@ def TetrisEnRed():
         p.run()
 
     def config():
-        c.create(menu, musicOn, musicOff)
+        # recibir parametro volver
+        c.create(menu, musicOn, musicOff) # pasarle funcion login() y parametro volver, adentro decide en base a volver si ejecuta login() o menu()
         c.run()
 
     def musicOn():
