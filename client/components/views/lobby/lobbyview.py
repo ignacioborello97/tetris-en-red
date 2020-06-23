@@ -20,6 +20,8 @@ class lobbyViewBuilder(ViewBuilder):
         self.buttons = []
         self.texts = []
         self.avatares = []
+        self.texts_names = []
+        self.texts_states = []
 
     def run(self):
         self.corriendo = True
@@ -36,6 +38,12 @@ class lobbyViewBuilder(ViewBuilder):
             for t in self.texts:
                 t.draw(self.screen)
 
+            for t in self.texts_names:
+                t.draw(self.screen)
+
+            for t in self.texts_states:
+                t.draw(self.screen)
+
             for a in self.avatares:
                 a.draw(self.screen)
 
@@ -50,14 +58,14 @@ class lobbyViewBuilder(ViewBuilder):
             if(cont % 1000 == 0):
                 players = client.get_game_players(client.get_idgame())
                 self.draw_players(players)
-
-            # try:
+          
+                
             pygame.display.update()
-            # except error:
-            #     print('ERROR : '+str(error))
+
 
     def draw_players(self, players):
         self.avatares = []
+        self.texts_states = []
         # Mapas de factores para acomodar texto e imagenes
         map_text = [1, 3, 5, 7]
         map_avatar = [1, 5, 9, 13]
@@ -79,8 +87,8 @@ class lobbyViewBuilder(ViewBuilder):
             player_avatar = Avatar(
                 self.width*(factor_avatar/16), self.height/3.5, self.width/8, self.height/7, player['avatar'])
             # Agregar textos y imagenes a sus respectivos arrays
-            self.texts.append(player_text)
-            self.texts.append(player_state_text)
+            self.texts_names.append(player_text)
+            self.texts_states.append(player_state_text)
             self.avatares.append(player_avatar)
             # adios ʕ•ᴥ•ʔ
 
@@ -88,7 +96,7 @@ class lobbyViewBuilder(ViewBuilder):
         backButton = Button('<------', self.width/15, self.height/1.15,
                             self.width/4, self.height/12, white, (200, 200, 200), 3, backAction)
         readyButton = Button('Ready!', self.width/3, self.height*(2/3),
-                             self.width/3, self.height/10, red, bright_red, 4, self.send_ready)
+                             self.width/3, self.height/10, red, bright_red, 4, readyAction, self.send_ready)
         self.buttons = [backButton, readyButton]
 
         t1 = Text('Codigo para unirse : '+client.get_idgame(), int(self.width/13),
@@ -98,8 +106,7 @@ class lobbyViewBuilder(ViewBuilder):
 
         # DEFINICION DEL SOCKET
         sio = socketio.Client()
-        sio.connect('http://localhost:5000',
-                    namespaces=['/game/' + client.get_idgame()])
+        sio.connect('http://localhost:5000', namespaces=['/game/' + client.get_idgame()])
 
         gamenamespace = GameNamespace('/game/' + client.get_idgame())
         gamenamespace.set_player(client.get_idplayer())
@@ -110,7 +117,7 @@ class lobbyViewBuilder(ViewBuilder):
         game_observer = GameObserver()
         # PONES AL OBSERVER A MIRAR LOS EVENTOS
         game_observer.observe(gamenamespace)
-        game_observer.set_start_action(readyAction)
+        game_observer.set_start_action(self.start_announce)
 
         client.set_gamenamespace(gamenamespace)
         client.set_gameobserver(game_observer)
@@ -122,3 +129,6 @@ class lobbyViewBuilder(ViewBuilder):
         print('APRETAR EL BOTON READY')
         gamenamespace = client.get_gamenamespace()
         gamenamespace.ready()
+        
+    def start_announce(self):
+        print('YA ESTAMOS LISTOS')

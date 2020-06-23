@@ -1,12 +1,40 @@
 import pygame
 import sys
+import socketio
 from pygame.locals import *
 from client.components.views.views import ViewBuilder
 from client.components.entities.avatars.avatars import Avatar
 from client.components.entities.text.texts import Text
 from client.components.entities.colors.colores import *
 from client.components.entities.board.boards import Board
+from client_login import Client
+from ....lib.lib_socket.lib_socket import GameNamespace, GameObserver
 
+
+# def start_announce():
+#     print('YA ESTAMOS LISTOS')
+# # DEFINICION DEL SOCKET
+# client = Client()
+# sio = socketio.Client()
+# sio.connect('http://localhost:5000', namespaces=['/game/' + client.get_idgame()])
+
+# gamenamespace = GameNamespace('/game/' + client.get_idgame())
+# gamenamespace.set_player(client.get_idplayer())
+# gamenamespace.set_sio(sio)
+# # ENCHUFAR EL SUBJECT AL socketio
+# sio.register_namespace(gamenamespace)
+# # CREAS UN OBSERVER DEL JUEGO
+# game_observer = GameObserver()
+# # PONES AL OBSERVER A MIRAR LOS EVENTOS
+# game_observer.observe(gamenamespace)
+# game_observer.set_start_action(start_announce)
+
+# client.set_gamenamespace(gamenamespace)
+# client.set_gameobserver(game_observer)
+# players = client.get_game_players(client.get_idgame())
+# print(str(players))
+# board = players['id']
+# print(str(board))
 
 class playViewBuilder(ViewBuilder):
     def __init__(self, width, height, bg, title=''):
@@ -15,7 +43,31 @@ class playViewBuilder(ViewBuilder):
         self.texts = []
         self.avatares = []
 
+    # def updateBoard(self):
+    #     def start_announce():
+    #         print('YA ESTAMOS LISTOS')
+    # # DEFINICION DEL SOCKET
+    #     client = Client()
+    #     sio = socketio.Client()
+    #     sio.connect('http://localhost:5000', namespaces=['/game/' + client.get_idgame()])
+
+    #     gamenamespace = GameNamespace('/game/' + client.get_idgame())
+    #     gamenamespace.set_player(client.get_idplayer())
+    #     gamenamespace.set_sio(sio)
+    #     # ENCHUFAR EL SUBJECT AL socketio
+    #     sio.register_namespace(gamenamespace)
+    #     # CREAS UN OBSERVER DEL JUEGO
+    #     game_observer = GameObserver()
+    #     # PONES AL OBSERVER A MIRAR LOS EVENTOS
+    #     game_observer.observe(gamenamespace)
+    #     game_observer.set_start_action(start_announce)
+
+    #     client.set_gamenamespace(gamenamespace)
+    #     client.set_gameobserver(game_observer)
+    
+
     def run(self):
+        #pygame.init()
         self.corriendo = True
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption(self.title)
@@ -35,6 +87,16 @@ class playViewBuilder(ViewBuilder):
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+                # if event.type == pygame.KEYDOWN:
+                #     if event.key == pygame.K_LEFT:
+                #         key = 'left'
+                #         self.press_key(key)
+                #     if event.key == pygame.K_RIGHT:
+                #         key = 'right'
+                #         self.press_key(key)
+            
+
+            # self.boards[0].update()
 
             pygame.display.update()
 
@@ -77,8 +139,13 @@ class playViewBuilder(ViewBuilder):
         avatar = Avatar(self.width/10.67, self.height/4.67,
                         self.width/8, self.height/7, userAvatar)
         self.avatares = [avatar]
-
+        # self.updateBoard()
         # dibujar pieza siguiente?
 
     def destroy(self):
         self.corriendo = False
+
+    # def press_key(self, key):
+    #     print('se apreto una tecla')
+    #     gamenamespace.press_key(key)
+        

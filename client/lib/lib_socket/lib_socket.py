@@ -68,39 +68,41 @@ class GameObserver:
 
     def update_game_state(self, data):
         if(data["game_state"] == "STARTED"):
-            print('EL JUEGO COMENZO')
-            print('FUNCION : ', str(self.start_action))
             if self.start_action != None:
+                print('ARRANCA EL JUEGO')
                 self.start_action()
-            # threading.Timer(1.5, self.make_piece_fall).start()
+            threading.Timer(1.5, self.make_piece_fall).start()
         # ver que hacer con los otros estados
 
     def update_board_state(self, data):
         player_id = data["player_id"]
         positions = data["board_state"]
         player_state = data["player_state"]
+        # self.update_client_board(positions)
 
-        self.player_boards[player_id] = positions
-        self.player_states[player_id] = player_state
+        # self.player_boards[player_id] = positions
+        # self.player_states[player_id] = player_state
 
-        for player in self.player_states.keys():
-            header = '      ' + self.player_states[player]['name']
-            for llenar in range(10 - len(self.player_states[player]['name'])):
-                header += ' '
+        # for player in self.player_states.keys():
+        #     header = '      ' + self.player_states[player]['name']
+        #     for llenar in range(10 - len(self.player_states[player]['name'])):
+        #         header += ' '
 
-        header += '\n'
+        # header += '\n'
 
-        output = ''
-        for rowi, row in enumerate(positions):
-            for player in self.player_boards.keys():
-                output += '      '
-                for x, y, shape in self.player_boards[player][rowi]:
-                    output += shape
-            output += '\n'
-        output += '\n\n'
+        # output = ''
+        # for rowi, row in enumerate(positions):
+        #     for player in self.player_boards.keys():
+        #         output += '      '
+        #         for x, y, shape in self.player_boards[player][rowi]:
+        #             output += shape
+        #     output += '\n'
+        # output += '\n\n'
 
-        print(header)
-        print(output)
+        # print(header)
+        # print(output)
+    # def update_client_board(self, positions):
+        
 
     def make_piece_fall(self):
         level_time_lambda = 0  # esto seria la variable que cambia en base al nivel
