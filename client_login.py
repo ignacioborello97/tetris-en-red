@@ -1,24 +1,19 @@
 import requests
+from client.lib.lib_socket.lib_socket import GameObserver, GameNamespace
 
 
 class Client():
 
-    id_player = ''
-    id_game = ''
+    id_player: str = ''
+    id_game: str = ''
+
+    gamenamespace: GameNamespace
+    gameobserver: GameObserver
 
     def __init__(self):
-        # while True:
-        #     self.name = str(input("enter a name"))
-        #     if self.name.isalpha():
-        #         break
-        #     print("Nombre no valido. Pruebe de nuevo")
-        # self.avatar = input("enter an avatar")
-        # self.create_player(self.name, self.avatar)
-        # self.create_game()
-        # self.add_player(Client.id_game, Client.id_player)
         pass
 
-    def create_player(self, name, avatar):
+    def create_player(self, name: str, avatar):
         message = {
             "name": name,
             "avatar": avatar
@@ -58,3 +53,15 @@ class Client():
 
     def set_game_id(self, game_id):
         Client.id_game = game_id
+
+    def set_gamenamespace(self, gamenamespace):
+        Client.gamenamespace = gamenamespace
+
+    def set_gameobserver(self, gameobserver):
+        Client.gameobserver = gameobserver
+
+    def get_gamenamespace(self) -> GameNamespace:
+        return Client.gamenamespace
+
+    def get_gameobserver(self) -> GameObserver:
+        return Client.gameobserver

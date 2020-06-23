@@ -39,6 +39,7 @@ class playViewBuilder(ViewBuilder):
             pygame.display.update()
 
     def create(self, userAvatar):
+        print('CREATE DE VISTA DEL JUEGO')
         t1 = Text('Nombre', int(self.width/20), black,
                   self.width*(5/32), self.height/14)
         t2 = Text('Score: 250000', int(self.width/27), black,

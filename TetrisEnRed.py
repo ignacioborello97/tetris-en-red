@@ -48,6 +48,7 @@ def TetrisEnRed():
         l.run()
 
     def play():
+        print('FUNCION PLAY!!!')
         p.create(s.getAvatar())
         p.run()
 

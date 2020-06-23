@@ -1,5 +1,7 @@
 import pygame
 import sys
+import socketio
+
 from pygame.locals import *
 from client.components.views.views import ViewBuilder
 from client.components.entities.text.texts import Text
@@ -7,6 +9,7 @@ from client.components.entities.button.buttons import Button
 from client.components.entities.colors.colores import *
 from client.components.entities.avatars.avatars import Avatar
 from client_login import Client
+from ....lib.lib_socket.lib_socket import GameNamespace, GameObserver
 
 client = Client()
 
@@ -48,11 +51,12 @@ class lobbyViewBuilder(ViewBuilder):
                 players = client.get_game_players(client.get_idgame())
                 self.draw_players(players)
 
+            # try:
             pygame.display.update()
+            # except error:
+            #     print('ERROR : '+str(error))
 
     def draw_players(self, players):
-        print('PLAYERS  :::::: '+str(players))
-
         self.avatares = []
         # Mapas de factores para acomodar texto e imagenes
         map_text = [1, 3, 5, 7]
@@ -84,21 +88,37 @@ class lobbyViewBuilder(ViewBuilder):
         backButton = Button('<------', self.width/15, self.height/1.15,
                             self.width/4, self.height/12, white, (200, 200, 200), 3, backAction)
         readyButton = Button('Ready!', self.width/3, self.height*(2/3),
-                             self.width/3, self.height/10, red, bright_red, 4, readyAction)
+                             self.width/3, self.height/10, red, bright_red, 4, self.send_ready)
         self.buttons = [backButton, readyButton]
 
         t1 = Text('Codigo para unirse : '+client.get_idgame(), int(self.width/13),
                   black, self.width/2, self.height/17.5)
 
-        # t6 = Text('Estado: Listo', int(self.width/40),
-        #           black, self.width/8, self.height*(18/35))
-        # t7 = Text('Estado: Esperando', int(self.width/40),
-        #           black, self.width*(3/8), self.height*(18/35))
-        # t8 = Text('Estado: Listo', int(self.width/40),
-        #           black, self.width/1.6, self.height*(18/35))
-        # t9 = Text('Estado: Listo', int(self.width/40), black,
-        #           self.width*(7/8), self.height*(18/35))
         self.texts = [t1]
+
+        # DEFINICION DEL SOCKET
+        sio = socketio.Client()
+        sio.connect('http://localhost:5000',
+                    namespaces=['/game/' + client.get_idgame()])
+
+        gamenamespace = GameNamespace('/game/' + client.get_idgame())
+        gamenamespace.set_player(client.get_idplayer())
+        gamenamespace.set_sio(sio)
+        # ENCHUFAR EL SUBJECT AL socketio
+        sio.register_namespace(gamenamespace)
+        # CREAS UN OBSERVER DEL JUEGO
+        game_observer = GameObserver()
+        # PONES AL OBSERVER A MIRAR LOS EVENTOS
+        game_observer.observe(gamenamespace)
+        game_observer.set_start_action(readyAction)
+
+        client.set_gamenamespace(gamenamespace)
+        client.set_gameobserver(game_observer)
 
     def destroy(self):
         self.corriendo = False
+
+    def send_ready(self):
+        print('APRETAR EL BOTON READY')
+        gamenamespace = client.get_gamenamespace()
+        gamenamespace.ready()
