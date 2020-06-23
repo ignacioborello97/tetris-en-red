@@ -21,15 +21,16 @@ pygame.mixer.init()
 pygame.mixer.music.load('original-tetris-theme-tetris-soundtrack (1).ogg')
 cliente = Client()
 
+
 def TetrisEnRed():
     def login():
         s.run()
-        
 
     def menu():
-        m.create(s.getName(), lobby, join, instruction, config, about, createGame)
+        m.create(s.getName(), lobby, join, instruction,
+                 config, about, createGame)
         m.run()
-        
+
     def instruction():
         i.create(menu)
         i.run()
@@ -43,15 +44,15 @@ def TetrisEnRed():
         j.run()
 
     def lobby():
-        l.create(s.getAvatar(),menu,play)
+        l.create(s.getAvatar(), menu, play)
         l.run()
 
     def play():
         p.create(s.getAvatar())
         p.run()
-    
+
     def config():
-        c.create(menu,musicOn,musicOff)
+        c.create(menu, musicOn, musicOff)
         c.run()
 
     def musicOn():
@@ -66,42 +67,34 @@ def TetrisEnRed():
     def createGame():
         cliente.create_game()
         cliente.add_player(cliente.get_idgame(), cliente.get_idplayer())
-    
+
     def lookGame():
-        cliente.add_player(j.get_lookGame(), cliente.get_idplayer())
-    
-    s = loginViewBuilder(800,600,silver,'Log In - Tetris en Red')
+        game_id = j.get_lookGame()
+        player_joined = cliente.add_player(
+            game_id, cliente.get_idplayer())
+
+        if "error" not in player_joined:
+            cliente.set_game_id(game_id)
+            lobby()
+
+    s = loginViewBuilder(800, 700, silver, 'Log In - Tetris en Red')
     s.create(menu, createPlayer)
-    m = mainmenuViewBuilder(800,700,silver,'Menu principal - Tetris en Red')
-    
-    i = instructionViewBuilder(400,300,silver,'Instrucciones - Tetris en Red')
-    
-    a = aboutViewBuilder(400,300,silver,'Acerca de - Tetris en Red')
-    
-    j = joingameViewBuilder(400,300,silver,'Buscar partida - Tetris en Red')
-   
-    l = lobbyViewBuilder(800,700,silver,'Lobby - Tetris en Red')
-    
-    p = playViewBuilder(800,700,silver,'Tetris en Red')
-    
-    c = configViewBuilder(400,300,silver,'Configuracion - Tetris en Red')
-    
-    
-    login()    
-    
-        
+    m = mainmenuViewBuilder(800, 700, silver, 'Menu principal - Tetris en Red')
+
+    i = instructionViewBuilder(
+        800, 700, silver, 'Instrucciones - Tetris en Red')
+
+    a = aboutViewBuilder(800, 700, silver, 'Acerca de - Tetris en Red')
+
+    j = joingameViewBuilder(800, 700, silver, 'Buscar partida - Tetris en Red')
+
+    l = lobbyViewBuilder(800, 700, silver, 'Lobby - Tetris en Red')
+
+    p = playViewBuilder(800, 700, silver, 'Tetris en Red')
+
+    c = configViewBuilder(800, 700, silver, 'Configuracion - Tetris en Red')
+
+    login()
+
+
 TetrisEnRed()
-
-
-
-
-        
-
-    
-    
-    
-
-
-
-
-
