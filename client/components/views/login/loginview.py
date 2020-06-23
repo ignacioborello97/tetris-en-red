@@ -64,10 +64,10 @@ class loginViewBuilder(ViewBuilder):
         t2 = Text('Escoge tu avatar:',int(self.width/26.67),black,self.width/2,self.height*(11/30))
         self.texts = [t,t2]
 
-        avatar1 = Avatar(self.width/10,self.height/2,self.width/8,self.height/6,'dragon100x100.png')
-        avatar2 = Avatar(self.width*(13/40),self.height/2,self.width/8,self.height/6,'perezoso100x100.png')
-        avatar3 = Avatar(self.width*(11/20),self.height/2,self.width/8,self.height/6,'unicornio100x100.png')
-        avatar4 = Avatar(self.width*(3/4),self.height/2,self.width/8,self.height/6,'t-rex100x100.png')
+        avatar1 = Avatar(self.width/10,self.height/2,self.width/8,self.height/7,'dragon100x100.png')
+        avatar2 = Avatar(self.width*(13/40),self.height/2,self.width/8,self.height/7,'perezoso100x100.png')
+        avatar3 = Avatar(self.width*(11/20),self.height/2,self.width/8,self.height/7,'unicornio100x100.png')
+        avatar4 = Avatar(self.width*(3/4),self.height/2,self.width/8,self.height/7,'t-rex100x100.png')
         self.avatares = [avatar1,avatar2,avatar3,avatar4]
 
     def destroy(self):
