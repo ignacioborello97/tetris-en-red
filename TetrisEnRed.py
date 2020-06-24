@@ -23,15 +23,17 @@ cliente = Client()
 
 
 def TetrisEnRed():
+    
     def login():
         # pasarle la funcion config()
         # esta vista llama a config(volver='login')
         s.run()
+        
 
     def menu():
+        c.set_volver('Menu')
         # esta vista llama a config(volver='menu')
-        m.create(s.getName(), lobby, join, instruction,
-                 config, about, createGame)
+        m.create(s.getName(), lobby, join, instruction, config, about, createGame)
         m.run()
 
     def instruction():
@@ -57,7 +59,7 @@ def TetrisEnRed():
 
     def config():
         # recibir parametro volver
-        c.create(menu, musicOn, musicOff) # pasarle funcion login() y parametro volver, adentro decide en base a volver si ejecuta login() o menu()
+        c.create(login, menu, musicOn, musicOff) # pasarle funcion login() y parametro volver, adentro decide en base a volver si ejecuta login() o menu()
         c.run()
 
     def musicOn():
@@ -83,11 +85,11 @@ def TetrisEnRed():
             lobby()
 
     s = loginViewBuilder(800, 700, silver, 'Log In - Tetris en Red')
-    s.create(menu, createPlayer)
+    s.create(menu,config, createPlayer)
+   
     m = mainmenuViewBuilder(800, 700, silver, 'Menu principal - Tetris en Red')
 
-    i = instructionViewBuilder(
-        800, 700, silver, 'Instrucciones - Tetris en Red')
+    i = instructionViewBuilder(800, 700, silver, 'Instrucciones - Tetris en Red')
 
     a = aboutViewBuilder(800, 700, silver, 'Acerca de - Tetris en Red')
 

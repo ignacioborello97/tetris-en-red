@@ -7,7 +7,7 @@ class Client():
     id_player: str = ''
     id_game: str = ''
     player_name: str = ''
-
+    server_ip: str = 'http://localhost:5000'
     gamenamespace: GameNamespace
     gameobserver: GameObserver
 
@@ -19,14 +19,14 @@ class Client():
             "name": name,
             "avatar": avatar
         }
-        response = requests.post('http://localhost:5000/player', json=message)
+        response = requests.post(self.get_serverIP() + '/player', json=message)
         player = response.json()
         Client.id_player = player['id']
         Client.player_name = name
 
 
     def create_game(self):
-        response = requests.post('http://localhost:5000/game')
+        response = requests.post(self.get_serverIP())
         game = response.json()
         Client.id_game = game['id']
         print(response.json())
@@ -35,7 +35,7 @@ class Client():
         message = {
             "id": id_player
         }
-        address = 'http://localhost:5000/game/' + id_game + '/players'
+        address = self.get_serverIP() + '/game/' + id_game + '/players'
         print(address)
         response = requests.post(address, json=message)
         return response.json()
@@ -47,7 +47,7 @@ class Client():
         return Client.id_game
 
     def get_game_players(self, id_game):
-        address = 'http://localhost:5000/game/' + id_game + '/players'
+        address = self.get_serverIP + '/game/' + id_game + '/players'
         response = requests.get(address)
         return response.json()
 
@@ -60,6 +60,9 @@ class Client():
     def set_gameobserver(self, gameobserver):
         Client.gameobserver = gameobserver
 
+    def set_serverIP(self,server_ip):
+        Client.server_ip = server_ip
+
     def get_gamenamespace(self) -> GameNamespace:
         return Client.gamenamespace
 
@@ -68,3 +71,6 @@ class Client():
 
     def get_player_name(self):
         return Client.player_name
+
+    def get_serverIP(self):
+        return Client.server_ip
