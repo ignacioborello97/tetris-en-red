@@ -1,7 +1,5 @@
 from flask import Flask
 from flask_socketio import SocketIO, emit
-import eventlet
-eventlet.monkey_patch()
 
 app = Flask(__name__)
 
