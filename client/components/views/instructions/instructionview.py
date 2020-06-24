@@ -4,12 +4,14 @@ from client.components.views.views import ViewBuilder
 from client.components.entities.text.texts import Text
 from client.components.entities.button.buttons import Button
 from client.components.entities.colors.colores import *
+from client.components.views.joingame.joinkeybehavior import joinKeyboardBehavior
 
 class instructionViewBuilder(ViewBuilder):
     def __init__(self, width, height, bg, title=''):
         ViewBuilder.__init__(self, width, height, bg, title)
         self.buttons = [] 
         self.texts = []
+        self.behavior = joinKeyboardBehavior()
 
     def run(self):
         self.corriendo = True        
@@ -32,10 +34,16 @@ class instructionViewBuilder(ViewBuilder):
                 
                 for b in self.buttons:
                     b.handle_event(event)
+
+                if event.type == pygame.KEYDOWN:    
+                    if event.key == pygame.K_ESCAPE:
+                        self.behavior.handle_event('escape')
             
             pygame.display.update()
 
     def create(self,backAction=None):
+        self.behavior.setBackAction(backAction)
+
         backButton = Button('<------',self.width/15,self.height/1.2,self.width/4,self.height/7.5,white,(200,200,200),3,backAction)
         self.buttons = [backButton]
 

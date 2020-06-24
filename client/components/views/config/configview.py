@@ -6,6 +6,7 @@ from client.components.entities.button.buttons import Button
 from client.components.entities.inputbox.input_boxes import InputBox
 from client.components.entities.colors.colores import *
 from client_login import Client
+from .configkeybehavior import configKeyboardBehavior
 
 client = Client()
 class configViewBuilder(ViewBuilder):
@@ -15,6 +16,10 @@ class configViewBuilder(ViewBuilder):
         self.texts = []
         self.inputs = []
         self.volver='Login'
+        self.backAction = None
+        self.onAction = None
+        self.offAction = None
+        self.behavior = configKeyboardBehavior(self.conectar)
 
     def run(self):
         self.corriendo = True
@@ -46,21 +51,37 @@ class configViewBuilder(ViewBuilder):
 
                 for i in self.inputs:
                     i.handle_event(event)
+
+                if event.type == pygame.KEYDOWN:    
+                    if event.key == pygame.K_ESCAPE:
+                        self.behavior.handle_event('escape')
+                    if event.key == pygame.K_RETURN:
+                        self.behavior.handle_event('enter')
+                    if event.key == pygame.K_p:
+                        self.behavior.handle_event('p')
+                    if event.key == pygame.K_s:
+                        self.behavior.handle_event('s')
             
             pygame.display.update()
 
     def create(self,backAction1=None,backAction2=None,onAction=None,offAction=None):
         if self.volver=='Login':
-            backAction = backAction1
+            self.backAction = backAction1
         else:
-            backAction = backAction2
+            self.backAction = backAction2
+        self.onAction = onAction
+        self.offAction = offAction
         
+        self.behavior.setBackAction(self.backAction)
+        self.behavior.setMusicOnAction(self.onAction)
+        self.behavior.setMusicOffAction(self.offAction)
+
         inputIP = InputBox(self.width/8,self.height/1.75,self.width/1.33,self.height/14)
         self.inputs = [inputIP]
 
-        backButton = Button('<------',self.width/15,self.height/1.2,self.width/4,self.height/7.5,white,(200,200,200),3,backAction)
-        onButton = Button('Music On',self.width/6,self.height/4,self.width/3,self.height/6,green,bright_green,3,onAction)
-        offButton = Button('Music Off',self.width*(3/6),self.height/4,self.width/3,self.height/6,red,bright_red,3,offAction)
+        backButton = Button('<------',self.width/15,self.height/1.2,self.width/4,self.height/7.5,white,(200,200,200),3,self.backAction)
+        onButton = Button('Music On',self.width/6,self.height/4,self.width/3,self.height/6,green,bright_green,3,self.onAction)
+        offButton = Button('Music Off',self.width*(3/6),self.height/4,self.width/3,self.height/6,red,bright_red,3,self.offAction)
         connectButton = Button('Conectar',self.width/3,self.height/1.5,self.width/3,self.height/8,green,bright_green,3,self.conectar)
         self.buttons = [backButton,onButton,offButton,connectButton]
 
@@ -78,6 +99,5 @@ class configViewBuilder(ViewBuilder):
         ip = self.getServerIp()
         client.set_serverIP(ip)
         
-
     def getServerIp(self):
         return self.inputs[0].get_username()

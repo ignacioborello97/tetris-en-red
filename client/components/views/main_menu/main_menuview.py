@@ -4,12 +4,14 @@ from client.components.views.views import ViewBuilder
 from client.components.entities.text.texts import Text
 from client.components.entities.button.buttons import Button
 from client.components.entities.colors.colores import *
+from .menukeybehavior import menuKeyboardBehavior
 
 class mainmenuViewBuilder(ViewBuilder):
     def __init__(self, width, height, bg, title=''):
         ViewBuilder.__init__(self, width, height, bg, title)
         self.buttons = []
         self.texts = []
+        self.behavior = menuKeyboardBehavior() 
 
     def run(self):
         self.corriendo = True
@@ -24,6 +26,8 @@ class mainmenuViewBuilder(ViewBuilder):
             for t in self.texts:
                 t.draw(self.screen)
 
+            self.behavior.draw_indicador(self.screen)
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -31,6 +35,14 @@ class mainmenuViewBuilder(ViewBuilder):
                 
                 for b in self.buttons:
                     b.handle_event(event)
+
+                if event.type == pygame.KEYDOWN:    
+                    if event.key == pygame.K_DOWN:
+                        self.behavior.handle_event('down')
+                    if event.key == pygame.K_UP:
+                        self.behavior.handle_event('up')
+                    if event.key == pygame.K_RETURN:
+                        self.behavior.handle_event('enter')
             
             pygame.display.update()
 
@@ -46,6 +58,8 @@ class mainmenuViewBuilder(ViewBuilder):
         welcomeText = Text('¡Bienvenido ' + name + '!',int(self.width/13.33),black,self.width/2,self.height*(3/35))
         tetrisText = Text('Tetris en Red',int(self.width/6.67),black,self.width/2,self.height*(9/35))
         self.texts = [welcomeText,tetrisText]
+
+        self.behavior.add_buttons(self.buttons)
 
     def destroy(self):
         self.corriendo = False

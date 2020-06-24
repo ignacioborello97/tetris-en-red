@@ -6,6 +6,7 @@ from client.components.entities.text.texts import Text
 from client.components.entities.button.buttons import Button
 from client.components.entities.colors.colores import *
 from client.components.entities.inputbox.input_boxes import InputBox
+from .joinkeybehavior import joinKeyboardBehavior
 
 
 class joingameViewBuilder(ViewBuilder):
@@ -14,6 +15,7 @@ class joingameViewBuilder(ViewBuilder):
         self.buttons = []
         self.texts = []
         self.inputs = []
+        self.behavior = joinKeyboardBehavior()
 
     def run(self):
         self.corriendo = True
@@ -45,9 +47,20 @@ class joingameViewBuilder(ViewBuilder):
                 for i in self.inputs:
                     i.handle_event(event)
 
+                if event.type == pygame.KEYDOWN:    
+                    if event.key == pygame.K_ESCAPE:
+                        self.behavior.handle_event('escape')
+                    if event.key == pygame.K_RETURN:
+                        self.behavior.handle_event('enter')
+
             pygame.display.update()
 
-    def create(self, backAction=None, joinAction=None, lookGame=None):
+    def create(self, backAction=None, lookGame=None):
+        self.backAction = backAction
+        self.joinAction = lookGame
+        self.behavior.setBackAction(backAction)
+        self.behavior.setJoinAction(lookGame)
+
         backButton = Button('<------', self.width/15, self.height/1.2,
                             self.width/4, self.height/7.5, white, (200, 200, 200), 3, backAction)
         joinButton = Button('Join Game', self.width/3, self.height/2,

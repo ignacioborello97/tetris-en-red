@@ -9,33 +9,9 @@ from client.components.entities.colors.colores import *
 from client.components.entities.board.boards import Board
 from client_login import Client
 from ....lib.lib_socket.lib_socket import GameNamespace, GameObserver
+from .playkeybehavior import playKeyboardBehavior
 
-
-# def start_announce():
-#     print('YA ESTAMOS LISTOS')
-# # DEFINICION DEL SOCKET
 client = Client()
-# sio = socketio.Client()
-# sio.connect('http://localhost:5000', namespaces=['/game/' + client.get_idgame()])
-
-# gamenamespace = GameNamespace('/game/' + client.get_idgame())
-# gamenamespace.set_player(client.get_idplayer())
-# gamenamespace.set_sio(sio)
-# # ENCHUFAR EL SUBJECT AL socketio
-# sio.register_namespace(gamenamespace)
-# # CREAS UN OBSERVER DEL JUEGO
-# game_observer = GameObserver()
-# # PONES AL OBSERVER A MIRAR LOS EVENTOS
-# game_observer.observe(gamenamespace)
-# game_observer.set_start_action(start_announce)
-
-# client.set_gamenamespace(gamenamespace)
-# client.set_gameobserver(game_observer)
-# players = client.get_game_players(client.get_idgame())
-# print(str(players))
-# board = players['id']
-# print(str(board))
-
 
 class playViewBuilder(ViewBuilder):
     def __init__(self, width, height, bg, title=''):
@@ -43,35 +19,15 @@ class playViewBuilder(ViewBuilder):
         self.boards = []
         self.texts = []
         self.avatares = []
-
-    # def updateBoard(self):
-    #     def start_announce():
-    #         print('YA ESTAMOS LISTOS')
-    # # DEFINICION DEL SOCKET
-    #     client = Client()
-    #     sio = socketio.Client()
-    #     sio.connect('http://localhost:5000', namespaces=['/game/' + client.get_idgame()])
-
-    #     gamenamespace = GameNamespace('/game/' + client.get_idgame())
-    #     gamenamespace.set_player(client.get_idplayer())
-    #     gamenamespace.set_sio(sio)
-    #     # ENCHUFAR EL SUBJECT AL socketio
-    #     sio.register_namespace(gamenamespace)
-    #     # CREAS UN OBSERVER DEL JUEGO
-    #     game_observer = GameObserver()
-    #     # PONES AL OBSERVER A MIRAR LOS EVENTOS
-    #     game_observer.observe(gamenamespace)
-    #     game_observer.set_start_action(start_announce)
-
-    #     client.set_gamenamespace(gamenamespace)
-    #     client.set_gameobserver(game_observer)
+        self.behavior = playKeyboardBehavior(self.press_key)
 
     def run(self):
-        # pygame.init()
         self.corriendo = True
+
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption(self.title)
         self.screen.fill(self.bg)
+
         while self.corriendo:
             self.screen.fill(self.bg)
             for b in self.boards:
@@ -90,21 +46,19 @@ class playViewBuilder(ViewBuilder):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
                         key = 'left'
-                        self.press_key(key)
+                        self.behavior.handle_event(key)
                     if event.key == pygame.K_RIGHT:
                         key = 'right'
-                        self.press_key(key)
+                        self.behavior.handle_event(key)
                     if event.key == pygame.K_DOWN:
                         key = 'down'
-                        self.press_key(key)
+                        self.behavior.handle_event(key)
                     if event.key == pygame.K_z:
                         key = 'z'
-                        self.press_key(key)
+                        self.behavior.handle_event(key)
                     if event.key == pygame.K_x:
                         key = 'x'
-                        self.press_key(key)
-
-            # self.boards[0].update()
+                        self.behavior.handle_event(key)
 
             pygame.display.update()
 
@@ -167,9 +121,6 @@ class playViewBuilder(ViewBuilder):
         self.gameobserver = client.get_gameobserver()
         self.gameobserver.set_update_board_action(self.draw_board)
 
-        # self.updateBoard()
-        # dibujar pieza siguiente?
-
     def destroy(self):
         self.corriendo = False
 
@@ -193,7 +144,7 @@ class playViewBuilder(ViewBuilder):
             self.boards[0].update(board_state)
             self.texts[1].text = 'Score: ' + str(player_state["score"])
             self.texts[2].text = 'Lines: ' + str(player_state["lines"])
-            self.texts[5].text = 'Level: ' + str(player_state["level"])
+            self.texts[4].text = 'Level: ' + str(player_state["level"])
 
         for index, player in enumerate(self.players):
             if player_id == player["id"]:

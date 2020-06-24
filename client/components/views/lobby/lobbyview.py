@@ -1,7 +1,6 @@
 import pygame
 import sys
 import socketio
-
 from pygame.locals import *
 from client.components.views.views import ViewBuilder
 from client.components.entities.text.texts import Text
@@ -10,6 +9,7 @@ from client.components.entities.colors.colores import *
 from client.components.entities.avatars.avatars import Avatar
 from client_login import Client
 from ....lib.lib_socket.lib_socket import GameNamespace, GameObserver
+from .lobbykeybehavior import lobbyKeyboardBehavior
 
 client = Client()
 
@@ -21,6 +21,9 @@ class lobbyViewBuilder(ViewBuilder):
         self.avatares = []
         self.texts_names = []
         self.texts_states = []
+        self.backAction = None
+        self.readyAction = None
+        self.behavior = lobbyKeyboardBehavior(self.send_ready)
 
     def run(self):
         self.corriendo = True
@@ -53,6 +56,12 @@ class lobbyViewBuilder(ViewBuilder):
 
                 for b in self.buttons:
                     b.handle_event(event)
+
+                if event.type == pygame.KEYDOWN:    
+                    if event.key == pygame.K_ESCAPE:
+                        self.behavior.handle_event('escape')
+                    if event.key == pygame.K_RETURN:
+                        self.behavior.handle_event('enter')
 
             if(cont % 1000 == 0):
                 players = client.get_game_players(client.get_idgame())
@@ -92,14 +101,16 @@ class lobbyViewBuilder(ViewBuilder):
             # adios ʕ•ᴥ•ʔ
 
     def create(self, userAvatar, backAction=None, readyAction=None):
+        self.behavior.setBackAction(backAction)
+        self.behavior.setReadyAction(readyAction)
+
         backButton = Button('<------', self.width/15, self.height/1.15,
                             self.width/4, self.height/12, white, (200, 200, 200), 3, backAction)
         readyButton = Button('Ready!', self.width/3, self.height*(2/3),
                              self.width/3, self.height/10, red, bright_red, 4, readyAction, self.send_ready)
         self.buttons = [backButton, readyButton]
 
-        t1 = Text('Codigo para unirse : '+client.get_idgame(), int(self.width/13),
-                  black, self.width/2, self.height/17.5)
+        t1 = Text('Codigo para unirse : '+client.get_idgame(), int(self.width/13),black, self.width/2, self.height/17.5)
 
         self.texts = [t1]
 

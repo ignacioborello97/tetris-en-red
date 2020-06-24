@@ -45,7 +45,7 @@ def TetrisEnRed():
         a.run()
 
     def join():
-        j.create(menu, lobby, lookGame)
+        j.create(menu, lookGame)
         j.run()
 
     def lobby():

@@ -6,7 +6,7 @@ from client.components.entities.text.texts import Text
 from client.components.entities.button.buttons import Button
 from client.components.entities.colors.colores import *
 from client.components.entities.avatars.avatars import Avatar
-# from .logintecladobehavior import loginKeyboardBehavior
+from client.components.views.main_menu.menukeybehavior import menuKeyboardBehavior
 
 
 class loginViewBuilder(ViewBuilder):
@@ -16,13 +16,15 @@ class loginViewBuilder(ViewBuilder):
         self.texts = []
         self.avatares = []
         self.inputs = []
-        # self.behavior = loginKeyboardBehavior() 
+        self.behavior = menuKeyboardBehavior() 
 
     def run(self):
         self.corriendo = True
+
         self.screen = pygame.display.set_mode((self.width,self.height))
         pygame.display.set_caption(self.title)
         self.screen.fill(self.bg)
+
         while self.corriendo:
             for i in self.inputs:
                 i.update()
@@ -39,6 +41,8 @@ class loginViewBuilder(ViewBuilder):
 
             for i in self.inputs:
                 i.draw(self.screen)
+            
+            self.behavior.draw_indicador(self.screen)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -53,6 +57,14 @@ class loginViewBuilder(ViewBuilder):
 
                 for i in self.inputs:
                     i.handle_event(event)
+
+                if event.type == pygame.KEYDOWN:    
+                    if event.key == pygame.K_DOWN:
+                        self.behavior.handle_event('down')
+                    if event.key == pygame.K_UP:
+                        self.behavior.handle_event('up')
+                    if event.key == pygame.K_RETURN:
+                        self.behavior.handle_event('enter')
             
             pygame.display.update()
 
@@ -74,7 +86,7 @@ class loginViewBuilder(ViewBuilder):
         avatar4 = Avatar(self.width*(3/4),self.height/2,self.width/8,self.height/7,'t-rex100x100.png')
         self.avatares = [avatar1,avatar2,avatar3,avatar4]
 
-        # self.behavior.add_buttons(self.buttons)
+        self.behavior.add_buttons(self.buttons)
 
     def destroy(self):
         self.corriendo = False

@@ -37,13 +37,16 @@ class Button:
 
         draw_text(self.msg,self.font,black,surface,self.x+self.w/2,self.y+self.h/2)
     
+    def do_action(self):
+        if self.action != None:
+            if self.action2 != None:
+                self.action2()
+            self.action()
+
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
-                if self.action != None:
-                    if self.action2 != None:
-                        self.action2()
-                    self.action()
+                self.do_action()
                     
                 
