@@ -26,10 +26,10 @@ class Client():
 
 
     def create_game(self):
-        response = requests.post(self.get_serverIP())
+        response = requests.post(self.get_serverIP() + '/game')
         game = response.json()
         Client.id_game = game['id']
-        print(response.json())
+
 
     def add_player(self, id_game, id_player):
         message = {
@@ -47,7 +47,7 @@ class Client():
         return Client.id_game
 
     def get_game_players(self, id_game):
-        address = self.get_serverIP + '/game/' + id_game + '/players'
+        address = self.get_serverIP() + '/game/' + id_game + '/players'
         response = requests.get(address)
         return response.json()
 
