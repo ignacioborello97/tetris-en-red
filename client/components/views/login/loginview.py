@@ -53,12 +53,13 @@ class loginViewBuilder(ViewBuilder):
             
             pygame.display.update()
 
-    def create(self,logAction=None, logAction2 =None):
+    def create(self,logAction=None,confAction=None, logAction2 =None):
         nameInput = InputBox(self.width/2.67,self.height/6,self.width/4,self.height/12)
         self.inputs = [nameInput]
         
         loginButton = Button('Log In',self.width/2.67,self.height/1.2,self.width/4,self.height/7.5,red,bright_red,3,logAction, logAction2)
-        self.buttons = [loginButton]
+        configButton = Button('Configuracion',self.width/1.23,self.height/35,self.width/8,self.height/10,yellow,bright_yellow,3,confAction)
+        self.buttons = [loginButton,configButton]
 
         t = Text('Escribe tu nombre:',int(self.width/26.67),black,self.width/2,self.height/12)
         t2 = Text('Escoge tu avatar:',int(self.width/26.67),black,self.width/2,self.height*(11/30))
