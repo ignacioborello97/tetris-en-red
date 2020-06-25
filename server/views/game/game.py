@@ -60,6 +60,7 @@ def add_game_player_test(id):
         player = playerControl.get(data['id'])
         if player is not None:
             game.players.append(player)
+            player.state = "PENDING"
             return player.json()
         else:
             return error_404('Game Not Found')

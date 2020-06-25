@@ -1,3 +1,4 @@
+from datetime import datetime
 import string
 import random
 from ..board.board import Board
@@ -28,6 +29,7 @@ class Player(Observer):
         self.count = 0
         self.lines = 0
         self.tetris = 0
+        self.level = 0
         self.board = Board(20, 10)
 
     def set_state(self, state):
@@ -119,4 +121,5 @@ class Player(Observer):
             "count": self.count,
             "lines": self.lines,
             "tetris": self.tetris,
+            "level": self.level,
         }
