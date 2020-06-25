@@ -11,7 +11,7 @@ class configKeyboardBehavior(keyboardBehavior):
     def handle_event(self,key):
         if key == 'p':
             self.musicOffAction()
-        if key == 's':
+        if key == 'espacio':
             self.musicOnAction()
         if key == 'enter':
             self.function()

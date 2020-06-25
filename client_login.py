@@ -7,7 +7,7 @@ class Client():
     id_player: str = ''
     id_game: str = ''
     player_name: str = ''
-    server_ip: str = 'https://tetris-en-red.herokuapp.com'
+    server_ip: str = 'http://localhost:5000'
     gamenamespace: GameNamespace
     gameobserver: GameObserver
 

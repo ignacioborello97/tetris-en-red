@@ -6,8 +6,7 @@ from client.components.entities.text.texts import Text
 from client.components.entities.button.buttons import Button
 from client.components.entities.colors.colores import *
 from client.components.entities.avatars.avatars import Avatar
-from client.components.views.main_menu.menukeybehavior import menuKeyboardBehavior
-
+from .loginkeybehavior import loginKeyboardBehavior
 
 class loginViewBuilder(ViewBuilder):
     def __init__(self, width, height, bg, title=''):
@@ -16,7 +15,7 @@ class loginViewBuilder(ViewBuilder):
         self.texts = []
         self.avatares = []
         self.inputs = []
-        self.behavior = menuKeyboardBehavior() 
+        self.behavior = loginKeyboardBehavior() 
 
     def run(self):
         self.corriendo = True
@@ -86,6 +85,7 @@ class loginViewBuilder(ViewBuilder):
         avatar4 = Avatar(self.width*(3/4),self.height/2,self.width/8,self.height/7,'t-rex100x100.png')
         self.avatares = [avatar1,avatar2,avatar3,avatar4]
 
+        self.behavior.add_buttons(self.avatares)
         self.behavior.add_buttons(self.buttons)
 
     def destroy(self):
@@ -95,9 +95,11 @@ class loginViewBuilder(ViewBuilder):
         return self.inputs[0].get_username()
 
     def getAvatar(self):
-        for a in self.avatares:
+        for a in self.avatares: 
             if a.getChosen:
                 avatarChosen = a.getAvatar()
                 return avatarChosen
+            else:
+                return 'dragon100x100.png'
         
    

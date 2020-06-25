@@ -73,7 +73,7 @@ class playViewBuilder(ViewBuilder):
                   self.width*(5/32), self.height*(43/70))
         t4 = Text('Next', int(self.width/27), black,
                   self.width*(5/32), self.height*(26/35))
-        t5 = Text('Level 20', int(self.width/27),
+        t5 = Text('Level', int(self.width/27),
                   black, self.width/2, self.height/14)
         t6 = Text('', int(self.width/40), black,
                   self.width*(27/32), self.height*(2/35))

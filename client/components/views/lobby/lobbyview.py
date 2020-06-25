@@ -81,10 +81,7 @@ class lobbyViewBuilder(ViewBuilder):
             "PENDING": "Esperando",
             "READY": "Listo!"
         }
-        print('players : ',str(players))
         for index, player in enumerate(players):
-            print('player : ',str(player))
-            print('map_estados : ',str(map_estados))
             STATE = map_estados[player['state']]
             factor_text = map_text[index]
             factor_avatar = map_avatar[index]

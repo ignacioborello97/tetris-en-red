@@ -59,8 +59,8 @@ class configViewBuilder(ViewBuilder):
                         self.behavior.handle_event('enter')
                     if event.key == pygame.K_p:
                         self.behavior.handle_event('p')
-                    if event.key == pygame.K_s:
-                        self.behavior.handle_event('s')
+                    if event.key == pygame.K_SPACE:
+                        self.behavior.handle_event('espacio')
             
             pygame.display.update()
 
