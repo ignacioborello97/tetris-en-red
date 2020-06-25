@@ -99,7 +99,6 @@ class loginViewBuilder(ViewBuilder):
             if a.getChosen:
                 avatarChosen = a.getAvatar()
                 return avatarChosen
-            else:
-                return 'dragon100x100.png'
+        return 'dragon100x100.png'
         
    
