@@ -35,7 +35,6 @@ monotonic==1.5
 multidict==4.7.6
 pefile==2019.4.18
 pycparser==2.20
-pygame==1.9.6
 PyInstaller==3.6
 pylint==2.5.0
 pynput==1.6.8
