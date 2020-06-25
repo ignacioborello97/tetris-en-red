@@ -116,7 +116,7 @@ class lobbyViewBuilder(ViewBuilder):
 
         # DEFINICION DEL SOCKET
         sio = socketio.Client()
-        sio.connect('http://localhost:5000', namespaces=['/game/' + client.get_idgame()])
+        sio.connect(client.get_serverIP(), namespaces=['/game/' + client.get_idgame()])
 
         gamenamespace = GameNamespace('/game/' + client.get_idgame())
         gamenamespace.set_player(client.get_idplayer())
