@@ -104,11 +104,18 @@ class Piece:
             ,'..I..'
             ,'..I..']
         ],
+        'O':[
+            ['.....'
+            ,'.....'
+            ,'.OO..'
+            ,'.OO..'
+            ,'.....']
+        ]
     }
 
     """
         Constructor de la clase Piece:
-            @param shape = 'S'| 'Z'| 'L'| 'J'| 'T'| 'I' -- indica que tipo de pieza es y se utiliza para tomar el array de posiciones posibles que puede tomar la pieza
+            @param shape = 'S'| 'Z'| 'L'| 'J'| 'T'| 'I'| 'O' -- indica que tipo de pieza es y se utiliza para tomar el array de posiciones posibles que puede tomar la pieza
             @param x -- indica la posicion en la fila con la que se va a trackear la pieza (se puede asumir que es el bloque del medio)
             @param y -- indica la posicion en la columna con la que se va a trackear la pieza (se puede asumir que es el bloque del medio)
     """

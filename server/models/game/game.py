@@ -12,7 +12,7 @@ class Game(Observer):
     STARTED = 'STARTED'
     PAUSED = 'PAUSED'
     FINISHED = 'FINISHED'
-    pieces = ['S', 'Z', 'L', 'J', 'T', 'I']
+    pieces = ['S', 'Z', 'L', 'J', 'T', 'I','O']
 
     @classmethod
     def generate_id(cls):
