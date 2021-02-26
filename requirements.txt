@@ -1,6 +1,6 @@
 Flask==1.1.2
 Flask==1.1.2
-aiohttp==3.6.2
+aiohttp==3.7.4
 altgraph==0.17
 astroid==2.4.0
 async-timeout==3.0.1 
