@@ -5,7 +5,7 @@ altgraph==0.17
 astroid==2.4.0
 async-timeout==3.0.1 
 attrs==19.3.0
-bottle==0.12.18
+bottle==0.12.20
 bottle-websocket==0.2.9
 buttons==0.1.9
 certifi==2020.4.5.2
